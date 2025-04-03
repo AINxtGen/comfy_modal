@@ -8,7 +8,7 @@ def configure_logging():
         return  # Already configured logging, do not add new handlers
 
     # Set root logger level
-    root_logger.setLevel(logging.DEBUG)
+    root_logger.setLevel(logging.INFO)
     
     # Create console handler
     console_handler = logging.StreamHandler(sys.stdout)

@@ -5,7 +5,7 @@ Utility functions for downloading and managing models for comfy_image build.
 import os
 from pathlib import Path
 from typing import Dict, Optional, Tuple
-from huggingface_hub import snapshot_download, hf_hub_download
+from huggingface_hub import snapshot_download, hf_hub_download # type: ignore
 import logging
 import shutil
 import toml
@@ -135,7 +135,7 @@ def download_hf_model(url_info: Dict, cache_path: str) -> Tuple[str, bool]:
                      latest_commit_dir = os.path.join(snapshots_dir, commit_hashes[-1])
                      logger.debug(f"Using latest snapshot from cache: {latest_commit_dir}")
                      return latest_commit_dir, False # Return path to snapshot dir
-            logger.warning(f"Could not find snapshot directory structure in {cache_path}, returning base cache path.")
+            logger.debug(f"Could not find snapshot directory structure in {cache_path}, returning base cache path.")
             return cache_path, False # Return the base cache path for the repo
 
         except Exception as e:

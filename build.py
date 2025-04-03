@@ -2,7 +2,7 @@
 Build and register ComfyUI image
 """
 from typing import List, Optional
-from modal import Image, Secret, NotFoundError
+from modal import Image, Secret
 from pathlib import Path
 import sys
 import modal
@@ -317,7 +317,7 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
     logger.info(f"Building ComfyUI image")
 
     # Stage 1: Install all Python dependencies
-    logger.info("Stage 1: Installing Python dependencies...")
+    logger.debug("Stage 1: Installing Python dependencies...")
     dependency_image = (
         base_image
         # Install ComfyUI specific packages in logical groups for better caching
@@ -412,10 +412,10 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
             "olefile",
         ])
     )
-    logger.info("Stage 1: Python dependencies installation complete.")
+    logger.debug("Stage 1: Python dependencies installation complete.")
 
     # Stage 2: Install ComfyUI and create directories
-    logger.info("Stage 2: Installing ComfyUI and creating directories...")
+    logger.debug("Stage 2: Installing ComfyUI and creating directories...")
     comfy_install_image = (
         dependency_image
         # Install ComfyUI using comfy-cli
@@ -428,10 +428,10 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
             f"rm -rf {Paths.INFERENCE.base}/ComfyUI/user/default/workflows && mkdir -p {Paths.INFERENCE.base}/ComfyUI/user/default/workflows",
             ])
     )
-    logger.info("Stage 2: ComfyUI installation complete.")
+    logger.debug("Stage 2: ComfyUI installation complete.")
 
     # Stage 3: Add local files and install extra dependencies
-    logger.info("Stage 3: Adding local files and installing extra dependencies...")
+    logger.debug("Stage 3: Adding local files and installing extra dependencies...")
     setup_image = (
         comfy_install_image
         # Add local files AFTER ComfyUI installation
@@ -440,29 +440,29 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
         .add_local_dir("workflows_example", remote_path="/root/comfy/workflows_example", copy=True)
         .run_function(_install_extra_dependencies)
     )
-    logger.info("Stage 3: Local files added and extra dependencies installed.")
+    logger.debug("Stage 3: Local files added and extra dependencies installed.")
 
 
     # Stage 4: Install custom nodes
-    logger.info("Stage 4: Installing ComfyUI custom nodes...")
+    logger.debug("Stage 4: Installing ComfyUI custom nodes...")
     nodes_installed_image = setup_image.run_function(
         _install_comfy_nodes,
         timeout=1800 # Increase timeout for cloning
     )
-    logger.info("Stage 4: Custom nodes installation complete.")
+    logger.debug("Stage 4: Custom nodes installation complete.")
 
 
     # Stage 5: Download inference models
     # Stage 5: Download inference models
-    logger.info(f"Stage 5: Downloading inference models for model_type: {model_type}...")
+    logger.debug(f"Stage 5: Downloading inference models for model_type: {model_type}...")
 
     # Check if Hugging Face token secret exists and include it conditionally
     hf_secret = None
     try:
         hf_secret = Secret.from_name("huggingface-token")
-        logger.info("Hugging Face token secret found, will use it for downloads.")
+        logger.debug("Hugging Face token secret found, will use it for downloads.")
         secrets_list = [hf_secret]
-    except NotFoundError:
+    except Exception as e:
         logger.warning("Hugging Face token secret ('huggingface-token') not found. Downloads might fail for gated models.")
         secrets_list = [] # Pass empty list if secret doesn't exist
 
@@ -478,9 +478,9 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
         # force_build=True
     )
 
-    logger.info("Stage 5: Inference models download complete.")
+    logger.debug("Stage 5: Inference models download complete.")
 
-    logger.info("ComfyUI image build process finished.")
+    logger.debug("ComfyUI image build process finished.")
     return final_image
 
 
@@ -493,4 +493,3 @@ if __name__ == "__main__":
 else:
     # Build for import, potentially filtering models if needed later
     comfy_image = build_comfy_image()
-    logger.info("ComfyUI image pre-built and ready for import.")

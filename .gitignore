@@ -6,3 +6,4 @@ ModalDocs/
 process_workflow_deps.py
 *.json
 workflows_example/
+venv/
