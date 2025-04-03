@@ -1,0 +1,226 @@
+[modal_settings]
+allow_concurrent_inputs = 100
+container_idle_timeout=60
+timeout=1800
+gpu = "A100-80GB" # Available GPUs: T4, L4, A10G, A100-40GB, A100-80GB, L40S, H100
+
+[extra_dependencies]
+# This section is for adding dependencies in case you need to install additional nodes.
+# If a node requires any dependencies, list them here.
+# Afterwards, you need to run the deploy command again.
+# Example:
+# packages = ["some_special_library", "another_package==1.2.3"]
+packages = []
+
+[nodes]
+nodes = [
+  "https://github.com/Fannovel16/comfyui_controlnet_aux",
+  "https://github.com/cubiq/ComfyUI_essentials",
+  "https://github.com/kijai/ComfyUI-DepthAnythingV2",
+  "https://github.com/kijai/ComfyUI-HunyuanVideoWrapper",
+  "https://github.com/kijai/ComfyUI-KJNodes",
+  "https://github.com/kijai/ComfyUI-WanVideoWrapper",
+  "https://github.com/WASasquatch/was-node-suite-comfyui",
+  "https://github.com/rgthree/rgthree-comfy",
+  "https://github.com/yolain/ComfyUI-Easy-Use",
+  "https://github.com/welltop-cn/ComfyUI-TeaCache",
+  "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite",
+  "https://github.com/city96/ComfyUI-GGUF",
+  "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes",
+  "https://github.com/crystian/ComfyUI-Crystools",
+  "https://github.com/pythongosssss/ComfyUI-Custom-Scripts",
+  "https://github.com/melMass/comfy_mtb",
+  # "https://github.com/omar92/ComfyUI-QualityOfLifeSuit_Omar92",
+]
+
+# Wan vae
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors"
+filename = "wanvideo/Wan2_1_VAE_bf16.safetensors"
+type = "vae"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors"
+filename = "wanvideo/Wan2_1_VAE_fp32.safetensors"
+type = "vae"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/taew2_1.safetensors"
+filename = "wanvideo/taew2_1.safetensors"
+type = "vae"
+for = "wan"
+
+# Wan text_encoder
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-bf16.safetensors"
+filename = "umt5-xxl-enc-bf16.safetensors"
+type = "text_encoders"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-fp8_e4m3fn.safetensors"
+filename = "umt5-xxl-enc-fp8_e4m3fn.safetensors"
+type = "text_encoders"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/open-clip-xlm-roberta-large-vit-huge-14_visual_fp16.safetensors"
+filename = "open-clip-xlm-roberta-large-vit-huge-14_visual_fp16.safetensors"
+type = "clip_vision"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/open-clip-xlm-roberta-large-vit-huge-14_visual_fp32.safetensors"
+filename = "open-clip-xlm-roberta-large-vit-huge-14_visual_fp32.safetensors"
+type = "clip_vision"
+for = "wan"
+
+# Wan diffusion models
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2_1-I2V-14B-480P_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1-I2V-14B-720P_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2_1-I2V-14B-720P_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2.1-Fun-Control-14B_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2.1-Fun-InP-14B_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1-T2V-14B_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2_1-T2V-14B_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1-T2V-1_3B_bf16.safetensors"
+filename = "WanVideo/Wan2_1-T2V-1_3B_bf16.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors"
+filename = "WanVideo/Wan2_1-T2V-1_3B_fp8_e4m3fn.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/alibaba-pai/Wan2.1-Fun-1.3B-Control/resolve/main/diffusion_pytorch_model.safetensors"
+filename = "WanVideo/Wan2.1-Fun-1.3B-Control.safetensors"
+type = "diffusion_models"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors"
+filename = "clip_vision_h.safetensors"
+type = "clip_vision"
+for = "wan"
+
+# Wan loras
+[[models]]
+link = "https://huggingface.co/Remade-AI/Squish/resolve/main/squish_18.safetensors"
+filename = "squish_18.safetensors"
+type = "loras"
+for = "wan"
+ignore  = true
+
+[[models]]
+link = "https://huggingface.co/spacepxl/Wan2.1-control-loras/resolve/main/1.3b/tile/wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors"
+filename = "wan2.1-1.3b-control-lora-tile-v0.2_comfy.safetensors"
+type = "loras"
+for = "wan"
+
+[[models]]
+link = "https://huggingface.co/spacepxl/Wan2.1-control-loras/resolve/main/1.3b/depth/wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors"
+filename = "wan2.1-1.3b-control-lora-depth-v0.1_comfy.safetensors"
+type = "loras"
+for = "wan"
+
+
+# Hunyuan models
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/blob/main/hunyuan_video_vae_bf16.safetensors"
+filename = "hyvid/hunyuan_video_vae_bf16.safetensors"
+type = "vae"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/blob/main/hunyuan_video_720_cfgdistill_fp8_e4m3fn.safetensors"
+filename = "hyvideo/hunyuan_video_720_cfgdistill_fp8_e4m3fn.safetensors"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_FastVideo_720_fp8_e4m3fn.safetensors"
+filename = "hyvideo/hunyuan_video_FastVideo_720_fp8_e4m3fn.safetensors"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_I2V_720_fixed_bf16.safetensors"
+filename = "hyvideo/hunyuan_video_I2V_720_fixed_bf16.safetensors"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_I2V_720_fixed_fp8_e4m3fn.safetensors"
+filename = "hyvideo/hunyuan_video_I2V_720_fixed_fp8_e4m3fn.safetensors"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_I2V-Q8_0.gguf"
+filename = "hyvideo/hunyuan_video_I2V-Q8_0.gguf"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_I2V-Q4_K_S.gguf"
+filename = "hyvideo/hunyuan_video_I2V-Q4_K_S.gguf"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hunyuan_video_accvid-t2v-5-steps_fp8_e4m3fn.safetensors"
+filename = "hyvideo/hunyuan_video_accvid-t2v-5-steps_fp8_e4m3fn.safetensors"
+type = "unet"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/openai/clip-vit-large-patch14/tree/main"
+type = "clip"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/llava-llama-3-8b-text-encoder-tokenizer/tree/main"
+type = "text_encoder|LLM"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/HunyuanVideo_dashtoon_keyframe_lora_converted_bf16.safetensors"
+filename = "HunyuanVideo_dashtoon_keyframe_lora_converted_bf16.safetensors"
+type = "loras"
+for = "hunyuan"
+
+[[models]]
+link = "https://huggingface.co/Kijai/HunyuanVideo_comfy/resolve/main/hyvideo_FastVideo_LoRA-fp8.safetensors"
+filename = "hyvideo_FastVideo_LoRA-fp8.safetensors"
+type = "loras"
+for = "hunyuan"

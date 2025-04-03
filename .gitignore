@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+ModalDocs/
+process_workflow_deps.py
+*.json
+workflows_example/
