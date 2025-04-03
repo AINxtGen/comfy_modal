@@ -8,13 +8,20 @@ It sets up a Modal application that builds a container image with ComfyUI, neces
 
 ## Setup
 
-1.  **Install Local Dependencies:**
-    Install the Modal client and the `toml` library:
+1.  **Clone the Repository:**
+    Clone this repository to your local machine:
     ```bash
-    pip install modal-client toml
+    git clone https://github.com/AINxtGen/comfy_modal.git
+    cd comfy_modal
     ```
 
-2.  **Set up Modal Account:**
+2.  **Install Local Dependencies:**
+    Install the Modal and the `toml` library:
+    ```bash
+    pip install modal toml
+    ```
+
+3.  **Set up Modal Account:**
     - Create an account on [Modal](https://modal.com/).
     - Authenticate with Modal using the CLI:
       ```bash
@@ -22,7 +29,7 @@ It sets up a Modal application that builds a container image with ComfyUI, neces
       ```
     - Alternatively, create a token manually at [https://modal.com/settings/tokens](https://modal.com/settings/tokens).
 
-3.  **Set up Hugging Face Token:**
+4.  **Set up Hugging Face Token:**
     - Create a Hugging Face account and generate an access token with at least `read` permissions on the [Hugging Face website](https://huggingface.co/settings/tokens).
     - Store your token as a Modal secret named `huggingface-token`:
       ```bash
