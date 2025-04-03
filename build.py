@@ -2,15 +2,13 @@
 Build and register ComfyUI image
 """
 from typing import List, Optional
-from modal import Image
-import modal
+from modal import Image, Secret, NotFoundError
 from pathlib import Path
 import sys
-import toml
+import modal
 import subprocess
 import logging
 import os
-import subprocess
 import toml
 from _utils.constants import Paths, get_config_path
 from _utils.logging_config import configure_logging
@@ -455,14 +453,26 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
 
 
     # Stage 5: Download inference models
+    # Stage 5: Download inference models
     logger.info(f"Stage 5: Downloading inference models for model_type: {model_type}...")
+
+    # Check if Hugging Face token secret exists and include it conditionally
+    hf_secret = None
+    try:
+        hf_secret = Secret.from_name("huggingface-token")
+        logger.info("Hugging Face token secret found, will use it for downloads.")
+        secrets_list = [hf_secret]
+    except NotFoundError:
+        logger.warning("Hugging Face token secret ('huggingface-token') not found. Downloads might fail for gated models.")
+        secrets_list = [] # Pass empty list if secret doesn't exist
+
     final_image = nodes_installed_image.run_function(
         _download_inference_models,
         args=[model_type],
         volumes={
             f"{Paths.CACHE.base}": modal.Volume.from_name("hf-cache", create_if_missing=True)
         },
-        secrets=[modal.Secret.from_name("huggingface-token")], # Ensure HF token secret exists
+        secrets=secrets_list, # Use the conditionally defined list
         timeout=3600, # Increase timeout for downloads
         # Consider force_build=True during development/debugging
         # force_build=True

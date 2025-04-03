@@ -1,0 +1,49 @@
+# ComfyUI Deployment with Modal
+
+This repository contains the necessary files to deploy the ComfyUI web interface using Modal.
+
+## Functionality
+
+It sets up a Modal application that builds a container image with ComfyUI, necessary dependencies, custom nodes, and models defined in `config.toml`. It then launches the ComfyUI web server accessible via a Modal web endpoint.
+
+## Setup
+
+1.  **Install Local Dependencies:**
+    Install the Modal client and the `toml` library:
+    ```bash
+    pip install modal-client toml
+    ```
+
+2.  **Set up Modal Account:**
+    - Create an account on [Modal](https://modal.com/).
+    - Authenticate with Modal using the CLI:
+      ```bash
+      modal token new
+      ```
+    - Alternatively, create a token manually at [https://modal.com/settings/tokens](https://modal.com/settings/tokens).
+
+3.  **Set up Hugging Face Token:**
+    - Create a Hugging Face account and generate an access token with at least `read` permissions on the [Hugging Face website](https://huggingface.co/settings/tokens).
+    - Store your token as a Modal secret named `huggingface-token`:
+      ```bash
+      modal secret create huggingface-token HF_TOKEN="your_hf_token_here"
+      ```
+    *(Replace `"your_hf_token_here"` with your actual Hugging Face token)*.
+    **Note:** While many models can be downloaded without a token, some gated models (e.g., Flux) require you to accept their license on the Hugging Face website first. Providing a token allows Modal to download these models on your behalf after you've accepted the terms.
+
+## Deployment
+
+Once the local setup is complete, you can deploy the ComfyUI interface using the following command:
+
+```bash
+modal deploy comfy_ui.py
+```
+
+This will build the image (if not already built) and start the web server on Modal. The command output will provide the URL to access the ComfyUI interface.
+
+## Configuration
+
+-   **Modal Settings:** Adjust concurrency, timeouts, and GPU type in `config.toml` under `[modal_settings]`.
+-   **Models:** Define models to download in `config.toml` under `[[models]]`.
+-   **Custom Nodes:** List custom node Git repository URLs in `config.toml` under `[nodes]`.
+-   **Extra Dependencies:** Add extra pip packages in `config.toml` under `[extra_dependencies]`.
