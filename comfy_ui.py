@@ -48,7 +48,6 @@ app = modal.App(name="comfy")
 cache_vol = modal.Volume.from_name("hf-cache", create_if_missing=True)
 comfy_output_vol = modal.Volume.from_name("comfy-output", create_if_missing=True)
 comfy_input_vol = modal.Volume.from_name("comfy-input", create_if_missing=True)
-comfy_workflows_vol = modal.Volume.from_name("comfy-workflows", create_if_missing=True)
 @app.function(
     image=comfy_image,
     allow_concurrent_inputs=ALLOW_CONCURRENT_INPUTS,

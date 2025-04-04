@@ -437,7 +437,6 @@ def build_comfy_image(model_type: Optional[str] = None) -> modal.Image:
         # Add local files AFTER ComfyUI installation
         .add_local_python_source("_utils", "comfy_ui", "build", copy=True)
         .add_local_file("config.toml", remote_path="/root/comfy/config.toml", copy=True)
-        .add_local_dir("workflows_example", remote_path="/root/comfy/workflows_example", copy=True)
         .run_function(_install_extra_dependencies)
     )
     logger.debug("Stage 3: Local files added and extra dependencies installed.")
