@@ -6,6 +6,10 @@ This repository contains the necessary files to deploy the ComfyUI web interface
 
 It sets up a Modal application that builds a container image with ComfyUI, necessary dependencies, custom nodes, and models defined in `config.toml`. It then launches the ComfyUI web server accessible via a Modal web endpoint.
 
+## Demo
+
+[![ComfyUI Modal Deployment Demo Video](https://img.youtube.com/vi/gMfVRiC6ymI/hqdefault.jpg)](https://www.youtube.com/watch?v=gMfVRiC6ymI)
+
 ## Setup
 
 1.  **Clone the Repository:**
@@ -36,7 +40,6 @@ It sets up a Modal application that builds a container image with ComfyUI, neces
       modal secret create huggingface-token HF_TOKEN="your_hf_token_here"
       ```
     *(Replace `"your_hf_token_here"` with your actual Hugging Face token)*.
-    **Note:** While many models can be downloaded without a token, some gated models (e.g., Flux) require you to accept their license on the Hugging Face website first. Providing a token allows Modal to download these models on your behalf after you've accepted the terms.
 
 ## Deployment
 
